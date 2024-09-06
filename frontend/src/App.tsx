@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -6,9 +6,20 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('https://test-multitenantsaas-backend-g5bhaydvdkaghpcg.japanwest-01.azurewebsites.net/api/products')
+      .then(response => response.json())
+      .then(data => setData(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
   return (
     <>
       <div>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
